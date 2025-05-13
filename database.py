@@ -3,8 +3,17 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, select
 
-# Получаем URL из переменных окружения Railway
-DATABASE_URL = os.getenv("postgresql://${{PGUSER}}:${{POSTGRES_PASSWORD}}@${{RAILWAY_PRIVATE_DOMAIN}}:5432/${{PGDATABASE}}").replace("postgresql://", "postgresql+asyncpg://")
+# Правильное получение DATABASE_URL
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
+# Заменяем протокол для asyncpg
+DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+
+# Добавляем sslmode при необходимости (для Railway)
+if "railway" in DATABASE_URL:
+    DATABASE_URL += "?sslmode=require"
 
 engine = create_async_engine(DATABASE_URL)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
