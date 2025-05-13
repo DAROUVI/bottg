@@ -6,7 +6,7 @@ from database import init_db, save_link, get_links
 import asyncio
 import os
 
-bot = Bot(token=os.getenv(8150760033:AAFJDQ67L9h0nrTCtPOzPHf0kK1NI75bL-E))
+bot = Bot(token=os.getenv("8150760033:AAFJDQ67L9h0nrTCtPOzPHf0kK1NI75bL-E"))
 dp = Dispatcher()
 
 # Инициализация БД при старте
