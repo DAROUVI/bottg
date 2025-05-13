@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, select
 
 # Правильное получение DATABASE_URL
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("Dpostgresql://postgres:hHGtiVrIVDBvcwIiITBUCZJETPIskQQn@:5432/railway")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is not set")
 
